@@ -3,6 +3,7 @@ var ReactDOM = require('react-dom');
 var $ = jQuery = require('jquery');
 var bootstrap = require('bootstrap');
 var _ = require('lodash');
+var firebase = require('firebase');
 
 var Toolbar = require('./Toolbar');
 var DashBoard = require('./DashBoard');
@@ -17,13 +18,33 @@ class MainInterface extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            notes: loadApts,
+            notes: [],
             dashBoard: true
         };
 
         this.addNewNote = this.addNewNote.bind(this);
         this.showDashBoard = this.showDashBoard.bind(this);
         this.deleteMessage = this.deleteMessage.bind(this);
+    }
+
+    componentWillMount() {
+        var config = {
+            apiKey: "AIzaSyC-SFpGbrwLH5qDCB0-p9fLEkge-JqiJbk",
+            authDomain: "diary-1984a.firebaseapp.com",
+            databaseURL: "https://diary-1984a.firebaseio.com",
+            projectId: "diary-1984a",
+            storageBucket: "diary-1984a.appspot.com",
+            messagingSenderId: "576158485349"
+        };
+        firebase.initializeApp(config);
+        var fb = firebase.database().ref('notes');
+
+        fb.once("value").then(function(dataSnapshot) {
+            console.log(dataSnapshot.val());
+            this.setState({
+                notes: dataSnapshot.val()
+            });
+        }.bind(this));
     }
 
     componentDidUpdate() {
@@ -79,5 +100,5 @@ class MainInterface extends React.Component {
 
 ReactDOM.render(
     <MainInterface />,
-    document.getElementById('notes')
+    document.getElementById('window')
 ); //render

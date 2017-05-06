@@ -128,11 +128,15 @@ h1, h2, h3, h4, h5, h6 {
   user-select: none;          /* Likely future */
 }
 
-.appointments {
+.notes {
+  width: 80%;
+  display: block;
+  margin-left: 8vw;
+  margin-right: auto;
   margin-top: 15px;
 }
 
-.appointments .appointments-headline {
+.notes .notes-headline {
   margin-bottom: 10px;
   color: #174152;
 }

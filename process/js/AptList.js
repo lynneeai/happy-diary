@@ -21,8 +21,8 @@ var AptList = class AptList extends React.Component {
                 <div className="note-info media-body">
                    <div className="note-head">
                      <span className="note-date">{this.props.singleItem.date}</span>
-                     <div className="owner-name pull-right"><span className="label-item">Owner:</span>
-                     {this.props.singleItem.ownerName}</div>
+                     <div className="owner-name pull-right"><span className="label-item">Happiness:</span>
+                     {this.props.singleItem.happiness}</div>
                    </div>
                    <span className="note-keyword">{this.props.singleItem.keyword}</span>
                    <div className="note">{this.props.singleItem.note}</div>
