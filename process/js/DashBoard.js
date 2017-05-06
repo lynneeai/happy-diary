@@ -13,8 +13,8 @@ var DashBoard = class DashBoard extends React.Component {
 
         return(
             <div className="row">
-                <div className="appointments col-sm-12">
-                    <h2 className="appointments-headline">Current Notes</h2>
+                <div className="notes col-sm-12">
+                    <h2 className="notes-headline">Footprints</h2>
                     <ul className="item-list media-list">
                         {myNotes.map((item, index) =>
                                 <AptList key={index} singleItem={item}
