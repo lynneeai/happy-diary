@@ -3,7 +3,12 @@ var ReactDOM = require('react-dom');
 var $ = jQuery = require('jquery');
 var bootstrap = require('bootstrap');
 var _ = require('lodash');
-var AptList = require('./AptList');
+
+var Toolbar = require('./Toolbar');
+var DashBoard = require('./DashBoard');
+
+var electron = eRequire('electron');
+var ipc = electron.ipcRenderer;
 
 var fs = eRequire('fs');
 var loadApts = JSON.parse(fs.readFileSync(dataLocation));
@@ -12,22 +17,13 @@ class MainInterface extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "Meng",
-            date: new Date(),
-            notes: loadApts
+            notes: loadApts,
+            dashBoard: true
         };
+
+        this.addNewNote = this.addNewNote.bind(this);
+        this.showDashBoard = this.showDashBoard.bind(this);
         this.deleteMessage = this.deleteMessage.bind(this);
-    }
-
-    componentDidMount() {
-        this.timerID = setInterval(
-            () => this.tick(),
-            1000
-        );
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.timerID);
     }
 
     componentDidUpdate() {
@@ -39,11 +35,17 @@ class MainInterface extends React.Component {
         });
     }
 
-    tick() {
+    addNewNote() {
         this.setState({
-            date: new Date()
-        });
-    }
+            dashBoard: false
+        })
+    } //toggleAptDisplay
+
+    showDashBoard() {
+        this.setState({
+            dashBoard: true
+        })
+    } //DashBoard
 
     deleteMessage(item) {
         var myNotes = this.state.notes;
@@ -56,25 +58,21 @@ class MainInterface extends React.Component {
     render() {
         var myNotes = this.state.notes;
 
-        return (
-            <div>
-            <h2> Happy Diary, {this.state.name} </h2>
-            <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+        let container = null;
+        if(this.state.dashBoard) {
+            container = <DashBoard notes={myNotes} />
+        }
+        else {
+            container = <div id="editor"><textarea defaultValue="Hello World"></textarea>
 
-            <div className="container">
-                <div className="row">
-                    <div className="appointments col-sm-12">
-                        <h2 className="appointments-headline">Current Notes</h2>
-                        <ul className="item-list media-list">
-                            {myNotes.map((item, index) =>
-                                <AptList key={index} singleItem={item}
-                                         whichItem={item} onDelete={this.deleteMessage} />
-                            )}
-                        </ul>
-                    </div>{/* col-sm-12 */}
-                </div>{/* row */}
-            </div>{/* container */}
-            </div>
+ </div>
+        }
+
+        return (
+            <div className="interface">
+                <Toolbar handleCreate={this.addNewNote} handleDash={this.showDashBoard} />
+                {container}
+                </div>
         );
     }
 } // MainInterface
