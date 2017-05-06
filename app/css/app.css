@@ -8570,3 +8570,7 @@ textarea {
   font-family: 'Monaco', courier, monospace;
   padding: 20px;
 }
+
+#statisticsDialog {
+  background: white;
+}

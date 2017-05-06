@@ -6,6 +6,7 @@ var _ = require('lodash');
 
 var Toolbar = require('./Toolbar');
 var DashBoard = require('./DashBoard');
+var SaveNote = require('./SaveNote');
 
 var electron = eRequire('electron');
 var ipc = electron.ipcRenderer;
@@ -63,9 +64,11 @@ class MainInterface extends React.Component {
             container = <DashBoard notes={myNotes} />
         }
         else {
-            container = <div id="editor"><textarea defaultValue="Hello World"></textarea>
-
- </div>
+            container =
+                <div id="editor">
+                    <textarea defaultValue="Hello World"></textarea>
+                    <SaveNote />
+                </div>
         }
 
         return (
