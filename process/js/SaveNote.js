@@ -2,6 +2,7 @@ var React = require('react');
 var bootstrap = require('bootstrap');
 var $ = jQuery = require('jquery');
 var Statistics = require('./Statistics');
+var firebase = require('firebase');
 
 var SaveNote = class SaveNote extends React.Component {
     constructor(props) {
@@ -11,6 +12,18 @@ var SaveNote = class SaveNote extends React.Component {
         };
 
         this.textAnalytics = this.textAnalytics.bind(this);
+    }
+
+    saveToDB(score) {
+
+      var fb = firebase.database().ref('notes');
+      fb.push({
+        date: "date",
+        happiness: score,
+        keyword : "lalala",
+        note : "fhdjklshfglsdkghfdslk",
+        ownerName : "Meng Dong"
+      });
     }
 
     textAnalytics() {
@@ -32,8 +45,6 @@ var SaveNote = class SaveNote extends React.Component {
         var requestObj = JSON.stringify(requestText);
         console.log(requestText);
 
-        var textScore = 0;
-
         $.ajax({
             url: "https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment?" + $.param(params),
             beforeSend: function(xhrObj){
@@ -50,20 +61,17 @@ var SaveNote = class SaveNote extends React.Component {
             console.log(data);
             var curScore = data['documents'][0]['score'];
             console.log(curScore);
-            textScore = curScore;
             this.setState({
-                score: textScore
+                score: curScore
             });
             $('#myModal').modal('show');
+            this.saveToDB(curScore);
         }.bind(this))
         .fail(function() {
             alert("error");
         });
 
-
         console.log(this.state.score);
-        console.log(textScore);
-        console.log("hello");
     }
 
     render() {
