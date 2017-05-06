@@ -20,12 +20,14 @@ class MainInterface extends React.Component {
         super(props);
         this.state = {
             notes: [],
-            dashBoard: true
+            dashBoard: true,
+            inputNote: 'Hello World'
         };
 
         this.addNewNote = this.addNewNote.bind(this);
         this.showDashBoard = this.showDashBoard.bind(this);
         this.deleteMessage = this.deleteMessage.bind(this);
+        this.updateInputNote = this.updateInputNote.bind(this);
     }
 
     componentWillMount() {
@@ -77,8 +79,15 @@ class MainInterface extends React.Component {
         })
     }
 
+    updateInputNote(event) {
+        this.setState({
+            inputNote: event.target.value
+        });
+    }
+
     render() {
         var myNotes = this.state.notes;
+        var currentNote = this.state.inputNote;
 
         let container = null;
         if(this.state.dashBoard) {
@@ -87,8 +96,8 @@ class MainInterface extends React.Component {
         else {
             container =
                 <div id="editor">
-                    <textarea defaultValue="Hello World"></textarea>
-                    <SaveNote />
+                    <textarea value={currentNote} onChange={this.updateInputNote} />
+                    <SaveNote content={this.state.inputNote}/>
                 </div>
         }
 
