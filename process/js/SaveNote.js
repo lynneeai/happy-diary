@@ -63,6 +63,7 @@ var SaveNote = class SaveNote extends React.Component {
 
         console.log(this.state.score);
         console.log(textScore);
+        console.log("hello");
     }
 
     render() {
