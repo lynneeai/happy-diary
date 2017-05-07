@@ -60,22 +60,28 @@ var DashBoard = class DashBoard extends React.Component {
             <div className="dash">
                 <DashHead className="dashHead" />
                 <div className="plot"><SimpleLineChart data={data} width={this.props.width*0.58}/></div>
-                <div className="pickDateRange">
-                <DatePicker
-                  selected={this.state.startDate}
-                  selectsStart
-                  startDate={this.state.startDate}
-                  endDate={this.state.endDate}
-                  onChange={this.handleChangeStart}
-                />
+                <div className="row date-pickers">
+                    <div className="col-sm-5">
+                        <label>Start Date</label>
+                        <DatePicker
+                          selected={this.state.startDate}
+                          selectsStart
+                          startDate={this.state.startDate}
+                          endDate={this.state.endDate}
+                          onChange={this.handleChangeStart}
+                        />
+                    </div>
 
-                <DatePicker
-                    selected={this.state.endDate}
-                    selectsEnd
-                    startDate={this.state.startDate}
-                    endDate={this.state.endDate}
-                    onChange={this.handleChangeEnd}
-                />
+                    <div className="col-sm-5 col-offset-1">
+                    <label id="DatePickerLabel">End Date</label>
+                    <DatePicker id="CustomizeDayPicker"
+                        selected={this.state.endDate}
+                        selectsEnd
+                        startDate={this.state.startDate}
+                        endDate={this.state.endDate}
+                        onChange={this.handleChangeEnd}
+                    />
+                    </div>
                 </div>
                 <div className="footprint">
                     <div className="row">
