@@ -105,7 +105,7 @@ var DashBoard = class DashBoard extends React.Component {
                             <ul className="item-list media-list">
                                 {myNotes.map((item, index) =>
                                     <AptList key={index} singleItem={item}
-                                     whichItem={item} onDelete={this.deleteMessage} />
+                                     whichItem={item} />
                                 )}
                             </ul>
                         </div>

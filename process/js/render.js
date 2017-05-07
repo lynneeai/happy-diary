@@ -43,7 +43,6 @@ class MainInterface extends React.Component {
 
         this.addNewNote = this.addNewNote.bind(this);
         this.showDashBoard = this.showDashBoard.bind(this);
-        this.deleteMessage = this.deleteMessage.bind(this);
         this.updateInputNote = this.updateInputNote.bind(this);
         this.updateInputTitle = this.updateInputTitle.bind(this);
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -52,7 +51,7 @@ class MainInterface extends React.Component {
     componentWillMount() {
         var fb = firebase.database().ref('notes');
 
-        fb.once("value").then(function(dataSnapshot) {
+        fb.on("value", function(dataSnapshot) {
             console.log(dataSnapshot.val());
             this.setState({
                 notes: Object.keys(dataSnapshot.val()).map(function (key) { return dataSnapshot.val()[key]; })
@@ -94,14 +93,6 @@ class MainInterface extends React.Component {
             dashBoard: true
         })
     } //DashBoard
-
-    deleteMessage(item) {
-        var myNotes = this.state.notes;
-        var newNotes = _.without(myNotes, item);
-        this.setState({
-            notes: newNotes
-        })
-    }
 
     updateInputNote(event) {
         this.setState({
