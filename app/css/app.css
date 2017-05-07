@@ -8320,6 +8320,7 @@ h6 {
 }
 
 .toolbar {
+  position: fixed;
   background-color: #F67979;
   min-width: 23vw;
   height: 100%;
@@ -8377,6 +8378,12 @@ h6 {
   -webkit-user-select: none;
   user-select: none;
   /* Likely future */
+}
+
+.dash {
+  margin-left: 25%;
+  margin-top: 5%;
+  margin-right: 3%;
 }
 
 .dashHead {
@@ -8544,7 +8551,9 @@ h6 {
 #editor {
   width: 75%;
   height: 80%;
-  margin: auto;
+  margin-left: 25%;
+  margin-top: 5%;
+  margin-right: 2%;
   color: #333;
 }
 
