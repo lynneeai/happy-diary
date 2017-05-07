@@ -294,3 +294,11 @@ textarea {
 #statisticsDialog {
     background: white;
 }
+
+.customizedDayPicker {
+    marin-left: 35%;
+}
+
+.datePickerLabel {
+    margin-left: 35%
+}

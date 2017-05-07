@@ -73,14 +73,14 @@ var DashBoard = class DashBoard extends React.Component {
                     </div>
 
                     <div className="col-sm-5 col-offset-1">
-                        <label id="DatePickerLabel">End Date</label>
-                        <DatePicker
-                            selected={this.state.endDate}
-                            selectsEnd
-                            startDate={this.state.startDate}
-                            endDate={this.state.endDate}
-                            onChange={this.handleChangeEnd}
-                        />
+                    <label id="DatePickerLabel">End Date</label>
+                    <DatePicker id="CustomizeDayPicker"
+                        selected={this.state.endDate}
+                        selectsEnd
+                        startDate={this.state.startDate}
+                        endDate={this.state.endDate}
+                        onChange={this.handleChangeEnd}
+                    />
                     </div>
                 </div>
                 <div className="footprint">
@@ -89,8 +89,8 @@ var DashBoard = class DashBoard extends React.Component {
                             <h3 className="notes-headline">Footprints</h3>
                             <ul className="item-list media-list">
                                 {myNotes.map((item, index) =>
-                                    <AptList itemKey={index} singleItem={item}
-                                     whichItem={item} />
+                                    <AptList key={index} singleItem={item}
+                                     whichItem={item} onDelete={this.deleteMessage} />
                                 )}
                             </ul>
                         </div>

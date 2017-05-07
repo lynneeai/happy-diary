@@ -8588,6 +8588,14 @@ textarea {
 #statisticsDialog {
   background: white;
 }
+
+.customizedDayPicker {
+  marin-left: 35%;
+}
+
+.datePickerLabel {
+  margin-left: 35%;
+}
 .react-datepicker__tether-element-attached-top .react-datepicker__triangle,
 .react-datepicker__tether-element-attached-bottom .react-datepicker__triangle,
 .react-datepicker__year-read-view--down-arrow,

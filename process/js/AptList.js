@@ -1,19 +1,14 @@
 var React = require('react');
-var firebase = require('firebase');
 
 var AptList = class AptList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
         };
-
-        this.handleDelete = this.handleDelete.bind(this);
     }
 
     handleDelete(e) {
-        console.log(this.props.singleItem.objKey);
-        var fb = firebase.database().ref('notes');
-        fb.child(this.props.singleItem.objKey).remove();
+        this.props.onDelete(this.props.whichItem);
     }
 
     render() {
