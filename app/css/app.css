@@ -8557,7 +8557,13 @@ h6 {
   color: #333;
 }
 
-#editor textarea {
+#editor .input-title {
+  width: 100%;
+  height: 7vh;
+  margin: auto;
+}
+
+#editor .input-content {
   width: 100%;
   height: 80vh;
   margin: auto;

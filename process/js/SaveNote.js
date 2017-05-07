@@ -12,16 +12,32 @@ var SaveNote = class SaveNote extends React.Component {
         };
 
         this.textAnalytics = this.textAnalytics.bind(this);
+        this.saveToDB = this.saveToDB.bind(this);
     }
 
     saveToDB(score) {
+      var content = this.props.content;
+      var title = this.props.title;
+
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
+
+      if(dd<10) {
+          dd='0'+dd
+      }
+      if(mm<10) {
+          mm='0'+mm
+      }
+      today = yyyy+'-'+mm+'-'+dd;
 
       var fb = firebase.database().ref('notes');
       fb.push({
-        date: "date",
+        date: today,
         happiness: score,
-        keyword : "lalala",
-        note : "fhdjklshfglsdkghfdslk",
+        keyword : title,
+        note : content,
         ownerName : "Meng Dong"
       });
     }
@@ -32,13 +48,14 @@ var SaveNote = class SaveNote extends React.Component {
         };
 
         var content = this.props.content;
+        var title = this.props.title;
 
         var requestText = {
             "documents": [
                 {
                     "language": "en",
                     "id": "01",
-                    "text": content
+                    "text": title + ' ' + content
                 }
             ]
         };
