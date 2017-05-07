@@ -9,23 +9,6 @@ var Toolbar = class Toolbar extends React.Component {
         };
     }
 
-    componentDidMount() {
-        this.timerID = setInterval(
-            () => this.tick(),
-            1000
-        );
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.timerID);
-    }
-
-    tick() {
-        this.setState({
-            date: new Date()
-        });
-    }
-
     createNewNote() {
         this.props.handleCreate();
     } //createAppointments
@@ -37,15 +20,14 @@ var Toolbar = class Toolbar extends React.Component {
     render() {
         return(
           <div className="toolbar">
-            <h4> Happy Diary, {this.state.name} </h4>
-            <h4>It is {this.state.date.toLocaleTimeString()}.</h4>
-            <div className="toolbar-item" onClick={(e) => this.toggleDash(e)}>
+            <h3 className="toolbar-title"> Happy Diary </h3>
+            <div className="toolbar-item toolbar-first-item" onClick={(e) => this.toggleDash(e)}>
               <span className="toolbar-item-button glyphicon glyphicon-question-sign"></span>
               <span className="toolbar-item-text">Dashboard</span>
             </div>
             <div className="toolbar-item" onClick={(e) => this.createNewNote(e)}>
               <span className="toolbar-item-button glyphicon glyphicon-plus-sign"></span>
-              <span className="toolbar-item-text">Add New Note</span>
+              <span className="toolbar-item-text">New Diary</span>
             </div>
           </div>
         ) //return

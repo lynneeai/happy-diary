@@ -8,6 +8,7 @@ var firebase = require('firebase');
 var Toolbar = require('./Toolbar');
 var DashBoard = require('./DashBoard');
 var SaveNote = require('./SaveNote');
+var LineChart = require('./line');
 
 var electron = eRequire('electron');
 var ipc = electron.ipcRenderer;

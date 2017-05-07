@@ -8303,63 +8303,9 @@ h3,
 h4,
 h5,
 h6 {
+  font-family: 'Avenir Next', courier, monospace;
   margin: 0;
-}
-
-.navbar {
-  margin-bottom: 0;
-  border-radius: 0;
-  background-image: url("../images/wisdompetlogo.svg");
-  background-repeat: no-repeat;
-  background-size: 40px;
-  background-position: 10px;
-}
-
-@media only screen
-  and (max-width: 768px) {
-  .navbar-header {
-    display: none;
-  }
-
-  .navbar {
-    background-image: none;
-  }
-}
-
-.navbar-default .navbar-brand {
-  color: white;
-  padding-left: 60px;
-}
-
-.navbar-default {
-  background-color: #194759;
-  border: none;
-}
-
-.navbar-brand {
-  font-weight: bold;
-}
-
-.navbar-form {
-  border: none;
-  box-shadow: none;
-}
-
-.navbar-form .form-control {
-  border: none;
-  border-radius: 4px;
-  box-shadow: none;
-}
-
-.navbar-form .btn-info {
-  background-color: #3E8C84;
-  border-color: #2B746B;
-}
-
-.navbar-form .btn-info:focus,
-.navbar-form .btn-info.focus {
-  background-color: #2B746B;
-  border-color: #286D64;
+  font-weight: 300;
 }
 
 .main {
@@ -8370,12 +8316,13 @@ h6 {
 
 .interface {
   display: flex;
-  background: #D8F2F0;
+  background: white;
 }
 
 .toolbar {
-  background-color: #296B73;
-  min-width: 200px;
+  background-color: #F67979;
+  min-width: 23vw;
+  height: 100%;
   color: white;
   font-size: 1.1em;
   height: 100vh;
@@ -8385,8 +8332,16 @@ h6 {
 @media only screen
   and (max-width: 768px) {
   .toolbar {
-    min-width: 55px;
+    min-width: 23vw;
   }
+}
+
+.toolbar-title {
+  margin-left: 10px;
+}
+
+.toolbar-first-item {
+  margin-top: 15px;
 }
 
 .toolbar-item {
@@ -8398,7 +8353,7 @@ h6 {
 }
 
 .toolbar-item:hover {
-  background-color: #133748;
+  background-color: #F55A5A;
 }
 
 .toolbar-item-button {
@@ -8424,6 +8379,37 @@ h6 {
   /* Likely future */
 }
 
+.dashHead {
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+  margin-left: 8vw;
+  margin-right: 8vw;
+}
+
+.date {
+  width: 50%;
+  display: inline-block;
+  float: left;
+  text-align: left;
+}
+
+.time {
+  width: 50%;
+  display: inline-block;
+  float: right;
+  text-align: right;
+}
+
+.plot {
+  margin-top: 10vh;
+  margin-bottom: 5vh;
+  margin-left: 5vw;
+}
+
+.footprint {
+  height: 50vh;
+}
+
 .notes {
   width: 80%;
   display: block;
@@ -8437,16 +8423,20 @@ h6 {
   color: #174152;
 }
 
+.note-item {
+  margin-top: 2px;
+  margin-bottom: 6px;
+  list-style-position: inside;
+  border-radius: 15px;
+  border: 1px solid black;
+}
+
 .item-list {
   margin: 0;
   padding: 0;
   list-style-type: none;
   font-size: 1.5rem;
   line-height: 120%;
-}
-
-.item-list .media {
-  margin-top: 0;
 }
 
 .item-list .pet-item {
