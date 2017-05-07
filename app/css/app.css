@@ -8413,6 +8413,10 @@ h6 {
   margin-left: 4vw;
 }
 
+.date-pickers {
+  margin-left: 10%;
+}
+
 .footprint {
   height: 50vh;
 }
@@ -8582,6 +8586,14 @@ textarea {
 
 #statisticsDialog {
   background: white;
+}
+
+.customizedDayPicker {
+  marin-left: 35%;
+}
+
+.datePickerLabel {
+  margin-left: 35%;
 }
 .react-datepicker__tether-element-attached-top .react-datepicker__triangle,
 .react-datepicker__tether-element-attached-bottom .react-datepicker__triangle,
