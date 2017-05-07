@@ -36,6 +36,17 @@ var DashBoard = class DashBoard extends React.Component {
         this.setState({
             startDate: date
         });
+        var startDateStr = date.format("YYYY-MM-DD");
+        if (!this.state.endDate) {
+          return;
+        }
+        var endDateStr = this.state.endDate.format("YYYY-MM-DD");
+        var ref = firebase.database().ref('notes');
+        this.selectedNotes = [];
+        ref.orderByChild("date").startAt(startDateStr).endAt(endDateStr).on("child_added", function(snapshot) {
+            console.log(snapshot['key']);
+            this.selectedNotes.push(snapshot.val());
+        }.bind(this));
     }
 
     handleChangeEnd(date) {
