@@ -1,104 +1,32 @@
 var React = require('react');
+var  LineChart = require('recharts').LineChart;
+var Line = require('recharts').Line;
+var XAxis = require('recharts').XAxis;
+var YAxis = require('recharts').YAxis;
+var CartesianGrid = require('recharts').CartesianGrid;
+var Tooltip = require('recharts').Tooltip;
+var Legend = require('recharts').Legend;
 
-class Line extends React.Component {
+
+var SimpleLineChart = class SimpleLineChart extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    render() {
-        let { path, stroke, fill, strokeWidth } = this.props;
-        return (
-          <path
-            d={path}
-            fill={fill}
-            stroke={stroke}
-            strokeWidth={strokeWidth}
-            />
-        );
-    }
-
-};
-
-Line.defaultProps = {
-    stroke:       'blue',
-    fill:         'none',
-    strokeWidth:  3
-};
-
-class DataSeries extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        let { data, colors, xScale, yScale, interpolationType } = this.props;
-
-        let line = d3.line()
-          .x((d) => { return xScale(d.x); })
-          .y((d) => { return yScale(d.y); });
-
-        let lines = data.points.map((series, id) => {
-          return (
-            <Line
-              path={line(series)}
-              seriesName={series.name}
-              stroke={colors(id)}
-              key={id}
-              />
-          );
-        });
-
-        return (
-          <g>
-            <g>{lines}</g>
-          </g>
-        );
-    }
-
-};
-
-DataSeries.defaultProps = {
-    data:               {},
-    interpolationType:  'cardinal',
-    colors:             d3.scaleOrdinal(d3.schemeCategory10),
-    xScale:             React.PropTypes.func,
-    yScale:             React.PropTypes.func
-};
-
-class LineChart extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-  render() {
-    let { width, height, data} = this.props;
-
-    let xScale = d3.scalePoint()
-      .domain(data.xValues)
-      .range([0, width]);
-
-    let yScale = d3.scaleLinear()
-      .range([height, 10])
-      .domain([data.yMin, data.yMax]);
-
-    return (
-      <svg width={width} height={height}>
-        <DataSeries
-          xScale={xScale}
-          yScale={yScale}
-          data={data}
-          width={width}
-          height={height}
-          />
-      </svg>
+	render () {
+    	return (
+        	<LineChart width={this.props.width} height={300} data={this.props.data}
+                margin={{top: 5, right: 30, left: 0, bottom: 0}}>
+           <XAxis dataKey="date"/>
+           <YAxis/>
+           <CartesianGrid strokeDasharray="3 3"/>
+           <Tooltip/>
+           <Legend />
+           <Line type="monotone" dataKey="happiness" stroke="#8884d8" activeDot={{r: 8}}/>
+          </LineChart>
     );
-  }
+    }
+}
 
-};
 
-LineChart.defaultProps = {
-    width :  900,
-    height : 300
-};
-
-module.exports = LineChart;
+module.exports = SimpleLineChart;

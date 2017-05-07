@@ -36,7 +36,9 @@ class MainInterface extends React.Component {
             notes: [],
             dashBoard: true,
             inputNote: 'Hello World',
-            inputTitle: 'Title'
+            inputTitle: 'Title',
+            width: window.innerWidth,
+            height: window.innerHeight,
         };
 
         this.addNewNote = this.addNewNote.bind(this);
@@ -44,6 +46,7 @@ class MainInterface extends React.Component {
         this.deleteMessage = this.deleteMessage.bind(this);
         this.updateInputNote = this.updateInputNote.bind(this);
         this.updateInputTitle = this.updateInputTitle.bind(this);
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
 
     componentWillMount() {
@@ -55,6 +58,13 @@ class MainInterface extends React.Component {
                 notes: Object.keys(dataSnapshot.val()).map(function (key) { return dataSnapshot.val()[key]; })
             });
         }.bind(this));
+
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
     }
 
     componentDidUpdate() {
@@ -63,6 +73,13 @@ class MainInterface extends React.Component {
             if(err) {
                 console.log(err);
             }
+        });
+    }
+
+    updateWindowDimensions() {
+        this.setState({
+            width: $(window).width(),
+            height: $(window).height()
         });
     }
 
@@ -105,8 +122,7 @@ class MainInterface extends React.Component {
 
         let container = null;
         if(this.state.dashBoard) {
-            console.log(myNotes);
-            container = <DashBoard notes={myNotes} />
+            container = <DashBoard notes={myNotes} width={this.state.width} />
         }
         else {
             container =

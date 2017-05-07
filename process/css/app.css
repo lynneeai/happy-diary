@@ -112,10 +112,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .plot {
-    margin-top: 10vh;
+    margin-top: 12vh;
     margin-bottom: 5vh;
-    margin-left: 5vw;
+    margin-left: 4vw;
 }
+
 
 .footprint {
     height: 50vh;
