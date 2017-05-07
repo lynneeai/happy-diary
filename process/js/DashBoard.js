@@ -4,6 +4,8 @@ var SimpleLineChart = require('./line');
 var DashHead = require('./DashHead');
 var $ = jQuery = require('jquery');
 var DatePicker = require('react-datepicker').default;
+var moment = require('moment');
+var firebase = require('firebase');
 
 var DashBoard = class DashBoard extends React.Component {
     constructor(props) {
@@ -16,6 +18,7 @@ var DashBoard = class DashBoard extends React.Component {
         };
         this.handleChangeStart = this.handleChangeStart.bind(this);
         this.handleChangeEnd = this.handleChangeEnd.bind(this);
+        this.selectedNotes = null;
     }
 
     componentDidMount() {
@@ -39,6 +42,14 @@ var DashBoard = class DashBoard extends React.Component {
         this.setState({
             endDate: date
         });
+        var startDateStr = this.state.startDate.format("YYYY-MM-DD");
+        var endDateStr = date.format("YYYY-MM-DD");
+        var ref = firebase.database().ref('notes');
+        this.selectedNotes = [];
+        ref.orderByChild("date").startAt(startDateStr).endAt(endDateStr).on("child_added", function(snapshot) {
+            console.log(snapshot['key']);
+            this.selectedNotes.push(snapshot.val());
+        }.bind(this));
     }
 
     tick() {
@@ -48,9 +59,13 @@ var DashBoard = class DashBoard extends React.Component {
     }
 
     render() {
-        var myNotes = this.props.notes;
-        console.log(myNotes);
-        console.log(this.state.filteredNote);
+        var myNotes = null;
+        if (this.selectedNotes && this.selectedNotes.length > 0) {
+            myNotes = this.selectedNotes;
+        } else {
+            myNotes = this.props.notes;
+        }
+
         var monthNames = ["January", "February", "March", "April", "May", "June",
                           "July", "August", "September", "October", "November", "December"
                          ];
@@ -73,14 +88,14 @@ var DashBoard = class DashBoard extends React.Component {
                     </div>
 
                     <div className="col-sm-5 col-offset-1">
-                    <label id="DatePickerLabel">End Date</label>
-                    <DatePicker id="CustomizeDayPicker"
-                        selected={this.state.endDate}
-                        selectsEnd
-                        startDate={this.state.startDate}
-                        endDate={this.state.endDate}
-                        onChange={this.handleChangeEnd}
-                    />
+                      <label id="DatePickerLabel">End Date</label>
+                      <DatePicker id="CustomizeDayPicker"
+                          selected={this.state.endDate}
+                          selectsEnd
+                          startDate={this.state.startDate}
+                          endDate={this.state.endDate}
+                          onChange={this.handleChangeEnd}
+                      />
                     </div>
                 </div>
                 <div className="footprint">
