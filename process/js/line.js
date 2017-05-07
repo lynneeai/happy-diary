@@ -1,75 +1,104 @@
 var React = require('react');
 
-class LineChart extends React.Component {
-
+class Line extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            width: this.props.width
-        };
     }
 
-    render(){
-        var data=[
-            {day:'02-11-2016',count:180},
-            {day:'02-12-2016',count:250},
-            {day:'02-13-2016',count:150},
-            {day:'02-14-2016',count:496},
-            {day:'02-15-2016',count:140},
-            {day:'02-16-2016',count:380},
-            {day:'02-17-2016',count:100},
-            {day:'02-18-2016',count:150}
-        ];
-
-        var margin = {top: 5, right: 50, bottom: 20, left: 50},
-            w = this.state.width - (margin.left + margin.right),
-            h = this.props.height - (margin.top + margin.bottom);
-
-        var parseDate = d3.timeParse("%m-%d-%Y");
-
-        data.forEach(function (d) {
-            d.date = parseDate(d.day);
-        });
-
-        var x = d3.scaleTime()
-            .domain(d3.extent(data, function (d) {
-                return d.date;
-            }))
-            .rangeRound([0, w]);
-
-        var y = d3.scaleLinear()
-            .domain([0,d3.max(data,function(d){
-                return d.count+100;
-            })])
-            .range([h, 0]);
-
-        var line = d3.line()
-            .x(function (d) {
-                return x(d.date);
-            })
-            .y(function (d) {
-                return y(d.count);
-            });
-
-        var transform='translate(' + margin.left + ',' + margin.top + ')';
-
+    render() {
+        let { path, stroke, fill, strokeWidth } = this.props;
         return (
-            <div>
-                <svg id={this.props.chartId} width={this.state.width} height={this.props.height}>
-
-                    <g transform={transform}>
-                        <path className="line shadow" d={line(data)} strokeLinecap="round"/>
-                    </g>
-                </svg>
-            </div>
+          <path
+            d={path}
+            fill={fill}
+            stroke={stroke}
+            strokeWidth={strokeWidth}
+            />
         );
     }
+
+};
+
+Line.defaultProps = {
+    stroke:       'blue',
+    fill:         'none',
+    strokeWidth:  3
+};
+
+class DataSeries extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        let { data, colors, xScale, yScale, interpolationType } = this.props;
+
+        let line = d3.line()
+          .x((d) => { return xScale(d.x); })
+          .y((d) => { return yScale(d.y); });
+
+        let lines = data.points.map((series, id) => {
+          return (
+            <Line
+              path={line(series)}
+              seriesName={series.name}
+              stroke={colors(id)}
+              key={id}
+              />
+          );
+        });
+
+        return (
+          <g>
+            <g>{lines}</g>
+          </g>
+        );
+    }
+
+};
+
+DataSeries.defaultProps = {
+    data:               {},
+    interpolationType:  'cardinal',
+    colors:             d3.scaleOrdinal(d3.schemeCategory10),
+    xScale:             React.PropTypes.func,
+    yScale:             React.PropTypes.func
+};
+
+class LineChart extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+  render() {
+    let { width, height, data} = this.props;
+
+    let xScale = d3.scalePoint()
+      .domain(data.xValues)
+      .range([0, width]);
+
+    let yScale = d3.scaleLinear()
+      .range([height, 10])
+      .domain([data.yMin, data.yMax]);
+
+    return (
+      <svg width={width} height={height}>
+        <DataSeries
+          xScale={xScale}
+          yScale={yScale}
+          data={data}
+          width={width}
+          height={height}
+          />
+      </svg>
+    );
+  }
+
 };
 
 LineChart.defaultProps = {
     width :  900,
-    height : 300,
-    charID : 'v1_chart'
+    height : 300
 };
 
 module.exports = LineChart;

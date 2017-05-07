@@ -46,7 +46,7 @@ class MainInterface extends React.Component {
         fb.once("value").then(function(dataSnapshot) {
             console.log(dataSnapshot.val());
             this.setState({
-                notes: dataSnapshot.val()
+                notes: Object.keys(dataSnapshot.val()).map(function (key) { return dataSnapshot.val()[key]; })
             });
         }.bind(this));
     }
@@ -92,6 +92,7 @@ class MainInterface extends React.Component {
 
         let container = null;
         if(this.state.dashBoard) {
+            console.log(myNotes);
             container = <DashBoard notes={myNotes} />
         }
         else {
