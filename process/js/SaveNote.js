@@ -33,13 +33,25 @@ var SaveNote = class SaveNote extends React.Component {
       today = yyyy+'-'+mm+'-'+dd;
 
       var fb = firebase.database().ref('notes');
-      fb.push({
+      var fbSnapshot = fb.push({
+        objKey: null,
         date: today,
         happiness: score,
         keyword : title,
         note : content,
         ownerName : "Meng Dong"
       });
+      var itemKey = fbSnapshot.key;
+      console.log(itemKey);
+      var fbChild = fb.child(itemKey);
+      fbChild.update({
+          objKey: itemKey,
+          date: today,
+          happiness: score,
+          keyword : title,
+          note : content,
+          ownerName : "Meng Dong"
+      })
     }
 
     textAnalytics() {
